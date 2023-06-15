@@ -21,7 +21,7 @@ def main():
     ctx = cl.create_some_context()
     queue = cl.CommandQueue(ctx)
 
-    x = np.array(list(range(1, n)), dtype=dtype)
+    x = np.arange(1, n, dtype=dtype)
     clx = cl.array.Array(queue, x.shape, x.dtype)
     clx.set(x)
 

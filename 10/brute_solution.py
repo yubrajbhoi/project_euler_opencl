@@ -10,7 +10,7 @@ def main() -> None:
     ctx = cl.create_some_context()
     queue = cl.CommandQueue(ctx)
 
-    x = np.array(list(range(1, n + 1)), dtype=dtype)
+    x = np.arange(1, n + 1, dtype=dtype)
     clx = cl.array.Array(queue, x.shape, dtype)
     clx.set(x)
 
