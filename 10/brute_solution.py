@@ -4,15 +4,12 @@ import pyopencl.array
 
 
 def main() -> None:
-    dtype = "int32"
+    dtype = np.dtype(np.int32)
     n = 2_000_000
 
     ctx = cl.create_some_context()
     queue = cl.CommandQueue(ctx)
-
-    x = np.arange(1, n + 1, dtype=dtype)
-    clx = cl.array.Array(queue, x.shape, dtype)
-    clx.set(x)
+    clx = cl.array.arange(queue, 1, n + 1, dtype)
 
     with open("primes.cl") as file:
         kernel = file.read()
@@ -23,10 +20,7 @@ def main() -> None:
 
     prg.primes(queue, clx.shape, None, clx.data)
     queue.finish()
-
-    data = clx.get()
-    primes = [i for i in data if i != 0]
-    print(sum(primes))
+    print(sum(clx.get()))
 
 
 if __name__ == "__main__":

@@ -15,15 +15,12 @@ __kernel void filter(__global int *x) {
 
 
 def main():
-    dtype = "int32"
+    dtype = np.dtype(np.int32)
     n = 1000
 
     ctx = cl.create_some_context()
     queue = cl.CommandQueue(ctx)
-
-    x = np.arange(1, n, dtype=dtype)
-    clx = cl.array.Array(queue, x.shape, x.dtype)
-    clx.set(x)
+    clx = cl.array.arange(queue, 1, n + 1, dtype)
 
     prg = cl.Program(
         ctx,
@@ -32,7 +29,7 @@ def main():
 
     prg.filter(queue, clx.shape, None, clx.data)
     queue.finish()
-    print(sum(clx.get()))
+    print(sum(clx))
 
 
 if __name__ == "__main__":
