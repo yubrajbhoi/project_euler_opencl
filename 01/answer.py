@@ -20,13 +20,9 @@ def main():
 
     ctx = cl.create_some_context()
     queue = cl.CommandQueue(ctx)
-    clx = cl.array.arange(queue, 1, n + 1, dtype)
+    clx = cl.array.arange(queue, 1, n, dtype)
 
-    prg = cl.Program(
-        ctx,
-        KERNEL,
-    ).build()
-
+    prg = cl.Program(ctx, KERNEL).build()
     prg.filter(queue, clx.shape, None, clx.data)
     queue.finish()
     print(sum(clx))

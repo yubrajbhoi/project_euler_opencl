@@ -13,11 +13,8 @@ def main() -> None:
 
     with open("primes.cl") as file:
         kernel = file.read()
-    prg = cl.Program(
-        ctx,
-        kernel,
-    ).build()
 
+    prg = cl.Program(ctx, kernel).build()
     prg.primes(queue, clx.shape, None, clx.data)
     queue.finish()
     print(sum(clx.get()))
