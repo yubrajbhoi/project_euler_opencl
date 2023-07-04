@@ -1,7 +1,6 @@
-__kernel void process(__global ulong* data, __global ulong* result) {
+__kernel void process(__global ulong* data, __global ulong* result, int size) {
     int gid = get_global_id(0);
     ulong mul_result = 1;
-    int size = 13;
 
     for (int i = 0; i < size; i++) {
         mul_result *= data[gid * size + i];

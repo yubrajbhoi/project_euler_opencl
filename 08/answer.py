@@ -22,7 +22,8 @@ def gen_data(n):
 
 def main():
     dtype = np.dtype(np.uint64)
-    data = np.array(gen_data(13), dtype=dtype)
+    n = np.int32(13)
+    data = np.array(gen_data(n), dtype=dtype)
 
     ctx = cl.create_some_context()
     queue = cl.CommandQueue(ctx)
@@ -34,7 +35,7 @@ def main():
         kernel = file.read()
     program = cl.Program(ctx, kernel).build()
 
-    program.process(queue, cl_data.shape, None, cl_data.data, cl_result.data)
+    program.process(queue, cl_data.shape, None, cl_data.data, cl_result.data, n)
     queue.finish()
 
     print(np.max(cl_result.get()))
