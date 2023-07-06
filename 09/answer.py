@@ -1,10 +1,10 @@
 import pyopencl as cl
 import pyopencl.array
 import numpy as np
-from itertools import islice
 
 
 def gen_data(n):
+    """Generate data points up to `n`."""
     for a in range(1, n + 1):
         for b in range(a + 1, n + 1):
             c = n - a - b
